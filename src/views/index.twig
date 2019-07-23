@@ -1,0 +1,15 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{title}}</h1>
+  <p>Welcome to {{title}}</p>
+	<form method="GET" action="/" class={{(error) ? 'error' : ''}}>
+		<input id="zip" name="zip" type="text" pattern="[0-9]*" value={{zip}}>
+		<input type="submit" />
+		<p>{{error}}</p>
+	</form>
+	<p>{{forecast.summary}}</p>
+	{% for day in forecast.data %}
+  	<p>{{day.summary}} - {{day.time|date("l F d, Y")}}</p>
+  {% endfor %}
+{% endblock %}

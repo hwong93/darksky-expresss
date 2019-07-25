@@ -1,0 +1,23 @@
+
+<div class="day">
+	<div class="content">
+		<div class="date">{{day.time|date('g:i a')}}</div>
+		<div class="icon"><canvas id={{day.time}} width="128" height="128"></canvas></div>
+		<div class="summary">{{day.summary}}</div>
+		<div class="temp">Temp: {{day.temperature}}°F</div>
+	</div>
+	<div class="advanced">
+		<div>Dew Point: {{day.dewPoint}}</div>
+		<div>Humidity: {{day.humidity}}</div>
+		<div>Cloud Cover: {{day.cloudCover}}</div>
+		<div>Wind Speed: {{day.windSpeed}}</div>
+		<div>UV Index: {{day.uvIndex}}</div>
+		<div>Visibility: {{day.visibility}}</div>
+		<div>Ozone: {{day.ozone}}</div>
+	</div>
+</div>
+<script>
+	var skycons = new Skycons({"color": "#232840"});
+	skycons.add("{{- day.time|escape("js") -}}", "{{- day.icon|escape("js") -}}");
+	skycons.play();
+</script>

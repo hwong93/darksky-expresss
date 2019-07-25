@@ -1,15 +1,51 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-  <h1>{{title}}</h1>
-  <p>Welcome to {{title}}</p>
-	<form method="GET" action="/" class={{(error) ? 'error' : ''}}>
-		<input id="zip" name="zip" type="text" pattern="[0-9]*" value={{zip}}>
-		<input type="submit" />
-		<p>{{error}}</p>
-	</form>
-	<p>{{forecast.summary}}</p>
-	{% for day in forecast.data %}
-  	<p>{{day.summary}} - {{day.time|date("l F d, Y")}}</p>
-  {% endfor %}
+	<section class={{page}}>
+		<form method="GET" action="/weather" class="form" >
+			<h1>{{title}}</h1>
+			<label for="zip" >Enter a zipcode</label>
+			<input id="zip" class="{{- (error) ? 'error' : '' -}}" name="zip"  placeholder="Ex: 06269" type="text"  pattern="[0-9]*"  value="{{- zip -}}"  />
+			<input type="submit" hidden/>
+			<p class="error-message">{{error}}</p>
+		</form>
+		 <a href="/my-weather" class="my-weather">Use My Location</a>
+	</section>
+	
+	{% if forecast %}
+		{% set weekly = forecast.daily %}
+		{% set currently = forecast.currently %}
+		{% set hourly = forecast.hourly %}
+		<div class="filters">
+			<a href="" id="currently-filter">Now</a>
+			<hr width="1" >
+			<a href="" id="weekly-filter" class="show" >Weekly</a>
+			<hr width="1" >
+			<a href="" id="hourly-filter" >Hourly</a>
+		</div>
+
+		<section id="weekly" class="weekly weather show">
+			{% for day in weekly.data %}
+				{% include '_day.twig' %}
+			{% endfor %}
+		</section>
+
+
+		<section id="hourly" class="hourly weather">
+			{% for day in hourly.data %}
+				{% if day.time|date('Y-m-d') < "now"|date_modify("+1 day")|date('Y-m-d') %}
+					{% include '_time.twig' with day %}
+				{% endif %}
+			{% endfor %}
+		</section>
+
+		{% set day = currently %}
+		<section id="currently" class="currently weather">
+			{% include '_time.twig' with day %}
+		</section>
+
+
+		<script src="/javascripts/filter.js"></script>
+
+	{% endif %}
 {% endblock %}

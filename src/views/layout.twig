@@ -2,9 +2,20 @@
 <html>
   <head>
     <title>{{ title }}</title>
-    <link rel='stylesheet' href='./stylesheets/styles.css' />
+    <link rel='stylesheet' href='/stylesheets/styles.css' />
+		<script src="/javascripts/skycons.js"></script>
+		<meta charset="UTF-8" >
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="This is a weather app that pulls from Dark Sky." />
+		<meta property="og:locale" content="en_US">
+		<meta property="og:type" content="website">
+		<meta property="og:description" content="This is a weather app that pulls from Dark Sky." >
+		<meta property="og:title" content="{{- title -}}" />
+		<meta property="og:url" content="{{- fullUrl -}}" />
+
   </head>
   <body>
     {% block body %}{% endblock %}
+
   </body>
 </html>

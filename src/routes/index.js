@@ -32,7 +32,7 @@ router.get('/weather', [check('zip').isLength({min: 5, max: 5})], (req, res, nex
 });
 
 
-router.get('/weather/:zip', [param('zip').isLength({min: 5, max: 5})], async (req, res, next) => {
+router.get('/weather/:zip', [param('zip').isLength({min: 5, max: 5})], (req, res, next) => {
 	const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.render('index', Object.assign({}, data, {

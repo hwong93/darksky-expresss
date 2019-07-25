@@ -10,6 +10,7 @@ const geocoderurl = `https://maps.googleapis.com/maps/api/geocode/json?`;
 const getForecastFromZip = (zip, res, sendData) => {
 	let geocode = geocoderurl + `address=${zip}&key=${process.env.GEOCODER_KEY}`;
 	let location = [];
+	let errorMessage = '';
 	fetch(geocode)
 		.then(response => response.json())
 		.then(data => {
@@ -18,9 +19,10 @@ const getForecastFromZip = (zip, res, sendData) => {
 			let darksky = darkskyurl + `${lat},${lng}`;
 			return fetch(darksky);
 		})
+		.catch(error => errorMessage = 'Zipcode does not exist.')
 		.then(response => response.json())
 		.then(data => res.render('index', Object.assign({}, sendData, { title: `Weather at ${zip}`, zip, forecast: data, page: 'forecast'})))
-		.catch(error => res.render('index', { title: 'Sorry! We couldn\'t get the forecast. Try again later!'}));
+		.catch(error => res.render('index', { title: 'Sorry, we couldn\'t get the forecast. Try again later!', page: 'home', error: errorMessage }));
 
 }
 

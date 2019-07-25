@@ -1,7 +1,7 @@
 
 <div class="day">
 	<div class="content">
-		<div class="date">{{day.time|date('g:i a')}}</div>
+		<div class="date">{{day.time|date('g:i a', 'America/New_York')}}</div>
 		<div class="icon"><canvas id={{day.time}} width="128" height="128"></canvas></div>
 		<div class="summary">{{day.summary}}</div>
 		<div class="temp">Temp: {{day.temperature}}°F</div>

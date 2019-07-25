@@ -34,7 +34,7 @@
 
 		<section id="hourly" class="hourly weather">
 			{% for day in hourly.data %}
-				{% if day.time|date('Y-m-d') < "now"|date_modify("+1 day")|date('Y-m-d') %}
+				{% if day.time|date('Y-m-d', 'America/New_York') < "now"|date_modify("+1 day")|date('Y-m-d', 'America/New_York') %}
 					{% include '_time.twig' with day %}
 				{% endif %}
 			{% endfor %}

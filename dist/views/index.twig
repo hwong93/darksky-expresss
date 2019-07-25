@@ -1,0 +1,52 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+	<section class={{page}}>
+			<h1>{{title}}</h1>
+		<form method="GET" action="/weather" class="form" >
+			<input id="zip" class="{{- (error) ? 'error' : '' -}}" name="zip"  placeholder="Enter a zipcode" type="text"  pattern="[0-9]*"  value="{{- zip -}}"  />
+			<input type="submit" hidden/>
+			{% if error %}
+				<p class="error-message">{{error}}</p>
+			{% endif %}
+		 <a href="/my-weather" class="my-weather">Use My Location</a>
+		</form>
+	</section>
+	
+	{% if forecast %}
+		{% set weekly = forecast.daily %}
+		{% set currently = forecast.currently %}
+		{% set hourly = forecast.hourly %}
+		<div class="filters">
+			<a href="" id="currently-filter">Now</a>
+			<hr width="1" >
+			<a href="" id="weekly-filter" class="show" >Weekly</a>
+			<hr width="1" >
+			<a href="" id="hourly-filter" >Hourly</a>
+		</div>
+
+		<section id="weekly" class="weekly weather show">
+			{% for day in weekly.data %}
+				{% include '_day.twig' %}
+			{% endfor %}
+		</section>
+
+
+		<section id="hourly" class="hourly weather">
+			{% for day in hourly.data %}
+				{% if day.time|date('Y-m-d') < "now"|date_modify("+1 day")|date('Y-m-d') %}
+					{% include '_time.twig' with day %}
+				{% endif %}
+			{% endfor %}
+		</section>
+
+		{% set day = currently %}
+		<section id="currently" class="currently weather">
+			{% include '_time.twig' with day %}
+		</section>
+
+
+		<script src="/javascripts/filter.js"></script>
+
+	{% endif %}
+{% endblock %}

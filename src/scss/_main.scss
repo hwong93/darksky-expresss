@@ -43,9 +43,10 @@ h1 {
 	transform: translateY(-50%);
 }
 
-
 // Form
 .my-weather {
+	display: block;
+	margin-top: 10px;
 	font-size: .8rem;
 	color: $white;
 	&:hover {
@@ -60,11 +61,25 @@ h1 {
 	color: $white;
 	border: 0;
 	border-bottom: 2px solid $white;
+	text-align: center;
 	&.error {
 		border-bottom: 2px solid red;
 	}
 	&::placeholder {
 		color: $gray;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.forecast {
+		clear:both;
+		overflow: auto;
+		h1 {
+			float: left;
+		}
+		.form {
+			float: right;
+		}
 	}
 }
 

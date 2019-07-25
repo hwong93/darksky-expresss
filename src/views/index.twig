@@ -2,14 +2,15 @@
 
 {% block body %}
 	<section class={{page}}>
-		<form method="GET" action="/weather" class="form" >
 			<h1>{{title}}</h1>
-			<label for="zip" >Enter a zipcode</label>
-			<input id="zip" class="{{- (error) ? 'error' : '' -}}" name="zip"  placeholder="Ex: 06269" type="text"  pattern="[0-9]*"  value="{{- zip -}}"  />
+		<form method="GET" action="/weather" class="form" >
+			<input id="zip" class="{{- (error) ? 'error' : '' -}}" name="zip"  placeholder="Enter a zipcode" type="text"  pattern="[0-9]*"  value="{{- zip -}}"  />
 			<input type="submit" hidden/>
-			<p class="error-message">{{error}}</p>
-		</form>
+			{% if error %}
+				<p class="error-message">{{error}}</p>
+			{% endif %}
 		 <a href="/my-weather" class="my-weather">Use My Location</a>
+		</form>
 	</section>
 	
 	{% if forecast %}

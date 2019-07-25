@@ -16,6 +16,7 @@ var geocoderurl = "https://maps.googleapis.com/maps/api/geocode/json?";
 var getForecastFromZip = function getForecastFromZip(zip, res, sendData) {
   var geocode = geocoderurl + "address=".concat(zip, "&key=").concat(process.env.GEOCODER_KEY);
   var location = [];
+  var errorMessage = '';
   (0, _isomorphicFetch["default"])(geocode).then(function (response) {
     return response.json();
   }).then(function (data) {
@@ -23,6 +24,8 @@ var getForecastFromZip = function getForecastFromZip(zip, res, sendData) {
     var lng = data.results[0].geometry.location.lng;
     var darksky = darkskyurl + "".concat(lat, ",").concat(lng);
     return (0, _isomorphicFetch["default"])(darksky);
+  })["catch"](function (error) {
+    return errorMessage = 'Zipcode does not exist.';
   }).then(function (response) {
     return response.json();
   }).then(function (data) {
@@ -34,7 +37,9 @@ var getForecastFromZip = function getForecastFromZip(zip, res, sendData) {
     }));
   })["catch"](function (error) {
     return res.render('index', {
-      title: 'Sorry! We couldn\'t get the forecast. Try again later!'
+      title: 'Sorry, we couldn\'t get the forecast. Try again later!',
+      page: 'home',
+      error: errorMessage
     });
   });
 };

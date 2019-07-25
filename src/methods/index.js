@@ -19,7 +19,7 @@ const getForecastFromZip = (zip, res, sendData) => {
 			return fetch(darksky);
 		})
 		.then(response => response.json())
-		.then(data => res.render('index', Object.assign({}, sendData, { title: `Weather at ${zip}`, zip, forecast: data})))
+		.then(data => res.render('index', Object.assign({}, sendData, { title: `Weather at ${zip}`, zip, forecast: data, page: 'forecast'})))
 		.catch(error => res.render('index', { title: 'Sorry! We couldn\'t get the forecast. Try again later!'}));
 
 }
